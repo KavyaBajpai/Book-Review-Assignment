@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MainContext } from '../contexts/context';
+import { toast, ToastContainer } from 'react-toastify';
 const Login = () => {
   const [currState, setCurrState] = useState('Login');
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {user, setUser, userId, setUserId} = useContext(MainContext);
@@ -13,12 +14,12 @@ const Login = () => {
 
     }
     const url = currState === 'Login'
-      ? 'http://localhost:4000/api/user/login'
-      : 'http://localhost:4000/api/user/register';
+      ? `${import.meta.env.VITE_BACKEND_URL}/api/user/login`
+      : `${import.meta.env.VITE_BACKEND_URL}/api/user/register`;
 
     const bodyData = currState === 'Login'
       ? { email, password }
-      : { name, email, password };
+      : { username, email, password };
 
     try {
       const res = await fetch(url, {
@@ -41,9 +42,16 @@ const Login = () => {
       
       
       if (data.token) {
+        if(currState === 'Login') {
+        toast.success("Login successful!");}
+        else
+        {
+        toast.success("Registration successful!");}
         localStorage.setItem('token', data.token);
+        }
+        
       }
-    } catch (err) {
+     catch (err) {
       console.error(err);
     }
   };
@@ -57,6 +65,7 @@ const Login = () => {
   
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-20 gap-4 text-gray-800">
       <h2 className="text-3xl mb-4 text-white font-semibold">{currState}</h2>
 
@@ -64,8 +73,8 @@ const Login = () => {
         <input
           type="text"
           placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           className="w-full px-3 py-2 border border-gray-800"
           required
         />
@@ -102,6 +111,8 @@ const Login = () => {
         {currState === 'Login' ? 'Sign In' : 'Sign Up'}
       </button>
     </form>
+    <ToastContainer />
+   </>
   );
 };
 

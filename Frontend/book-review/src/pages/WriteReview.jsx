@@ -15,8 +15,8 @@ function WriteReview() {
         
         console.log(bookTitle, reviewText, rating)
         try {
-            
-            const bookRes = await fetch(`http://localhost:4000/api/books/getByTitle?title=${encodeURIComponent(bookTitle)}`);
+        
+            const bookRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/books/getByTitle?title=${encodeURIComponent(bookTitle)}`);
             console.log('Book response:', bookRes);
             const bookData = await bookRes.json();
             
@@ -29,8 +29,8 @@ function WriteReview() {
     
             const bookId = bookData.data.id;
             const token = localStorage.getItem('token');
-           
-            const reviewRes = await fetch('http://localhost:4000/api/reviews/add', {
+            console.log(token)
+            const reviewRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ function WriteReview() {
                     reviewText
                 }),
             });
-    
+            console.log('Review response:', reviewRes);
             if (!reviewRes.ok) {
                 throw new Error('Failed to submit review');
             }

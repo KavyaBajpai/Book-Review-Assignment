@@ -13,7 +13,7 @@ const Browse = () => {
       if (title) queryParams.append("search", title);
       if (genre) queryParams.append("genre", genre);
 
-      const res = await fetch(`http://localhost:4000/api/books/getbooks?${queryParams.toString()}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/books/getbooks?${queryParams.toString()}`);
       const data = await res.json();
 
       if (data.success) {

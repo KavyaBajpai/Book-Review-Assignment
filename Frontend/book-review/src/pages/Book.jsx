@@ -16,7 +16,8 @@ function Book() {
   const fetchDetails = async () => {
      try{
          
-        const response = await fetch(`http://localhost:4000/api/books/getBook/${bookId}`)
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/books/getBook/${bookId}`);
+
         const data = await response.json()
         console.log(data)
         if(data.success){

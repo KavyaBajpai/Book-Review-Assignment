@@ -39,55 +39,64 @@ const loginUser = async (req, res) => {
     }
 }
 
-const registerUser = async (req, res) => {
-    try {
-        const { username, email, password, bio, avatarUrl } = req.body;  
-        
-       
-        const userExists = await db.select().from(users).where(eq(users.email, email)).limit(1).execute();
 
-        if (userExists.length > 0) {
-            return res.status(400).json({ success: false, message: "User already exists" });
-        }
+ const registerUser = async (req, res) => {
+  try {
+    // Safely get fields
+    const username = req.body.username?.trim() || '';
+    const email = req.body.email?.trim() || '';
+    const password = req.body.password || '';
+    const bio = req.body.bio || '';
+    const avatarUrl = req.body.avatarUrl || '';
 
-        
-        if (!validator.isEmail(email)) {
-            return res.status(400).json({ success: false, message: "Invalid Email" });
-        }
+    console.log("Incoming body:", req.body);
 
-        
-        if (password.length < 6) {
-            return res.status(400).json({ success: false, message: "Password must be at least 6 characters long" });
-        }
-
-       
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-       
-        const newUser = {
-            username,
-            email,
-            passwordHash: hashedPassword,
-            bio: bio || '', 
-            avatarUrl: avatarUrl || '', 
-            isAdmin: false,  
-        };
-
-        
-        const [insertedUser] = await db.insert(users).values(newUser).returning().execute();
-
-       
-        const token = generateToken(insertedUser.id);
-
-        
-        res.json({ success: true, user: insertedUser, token });
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    // Validate required fields
+    if (!username || !email || !password) {
+      return res.status(400).json({ success: false, message: "Username, Email, and Password are required" });
     }
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ success: false, message: "Invalid Email" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: "Password must be at least 6 characters long" });
+    }
+
+    // Check if user already exists
+    const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1).execute();
+
+    if (existingUser.length > 0) {
+      return res.status(400).json({ success: false, message: "User already exists" });
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Insert the new user
+    const [newUser] = await db.insert(users).values({
+      username,
+      email,
+      passwordHash: hashedPassword,
+      bio,
+      avatarUrl,
+      isAdmin: false,
+    }).returning().execute();
+
+    // Generate token
+    const token = generateToken(newUser.id);
+
+    // Respond
+    res.status(201).json({ success: true, user: newUser, token });
+
+  } catch (error) {
+    console.error('Register Error:', error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
 };
+
 
 const logoutUser = async (req, res) => {
     try {

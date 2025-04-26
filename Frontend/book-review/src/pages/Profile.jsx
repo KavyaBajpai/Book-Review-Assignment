@@ -9,7 +9,7 @@ function Profile() {
     try{
       const queryParams = new URLSearchParams();
       if (userId) queryParams.append("userId", userId);
-      const res = await fetch(`http://localhost:4000/api/reviews/getAll?${queryParams.toString()}`)
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/getAll?${queryParams.toString()}`)
       const data = await res.json()
       console.log(data)
       console.log("Reviews:", data.reviews)
