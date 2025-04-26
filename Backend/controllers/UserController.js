@@ -4,7 +4,7 @@ import { db } from '../utils/config.js';
 import { users } from '../utils/schema/UserSchema.js';  
 import validator from 'validator';
 import { eq } from 'drizzle-orm';
-//import localStorage from 'local-storage-fallback'; // Use local-storage-fallback for local storage
+//import localStorage from 'local-storage-fallback'; 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET); 
 }
@@ -27,7 +27,7 @@ const loginUser = async (req, res) => {
 
         if (isMatch) {
             const token = generateToken(foundUser.id);
-            //localStorage.setItem('token', token); // Store token in local storage (if needed)
+            //localStorage.setItem('token', token); 
             return res.json({ success: true, user: foundUser, token });
         } else {
             return res.status(400).json({ success: false, message: "Invalid Credentials" });
@@ -102,7 +102,7 @@ const logoutUser = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1]; // Bearer <token>
+        const token = req.headers.authorization?.split(" ")[1]; 
         if (!token) {
             return res.status(401).json({ success: false, message: "No token provided" });
         }

@@ -30,13 +30,13 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log(data); // show what backend responded
+      console.log(data); 
       if (data.user && data.user.username && data.user.id) {
         setUser(data.user.username);
         setUserId(data.user.id);
-        localStorage.setItem('user', data.user.username); // Save username to localStorage
+        localStorage.setItem('user', data.user.username); 
       localStorage.setItem('userId', data.user.id);
-        //localStorage.setItem('token', data.token); // save token in localStorage
+        
       }
       
       
@@ -50,10 +50,10 @@ const Login = () => {
 
   useEffect(() => {
     if (userId && user) {
-      console.log("User ID:", userId); // Logs the userId after it is set
-      console.log("User:", user); // Logs the username after it is set
+      console.log("User ID:", userId); 
+      console.log("User:", user); 
     }
-  }, [userId, user]); // This will run whenever userId or user is updated
+  }, [userId, user]); 
   
 
   return (

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { MainContext } from '../contexts/context.jsx'
 import { Link } from 'react-router-dom';
-import { X } from 'lucide-react'; // Assuming you're using lucide-react icons
+import { X } from 'lucide-react'; 
 import { useLocation } from 'react-router-dom';
 
 function SideNav() {
@@ -9,9 +9,9 @@ function SideNav() {
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
       };
-    const location = useLocation(); // Get current route path
+    const location = useLocation(); 
 
-    // Menu items
+    
     const menuList = [
         { id: 0, name: 'Home', path: '/' },
         { id: 1, name: 'Browse', path: '/browse' },
@@ -20,16 +20,14 @@ function SideNav() {
         { id: 4, name: 'About Us', path: '/about' },
     ];
 
-    // Toggle sidebar visibility
+   
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
 
     return (
         <div
-            // className={`fixed w-64 flex flex-col gap-3 h-screen shadow-md p-2 bg-white transition-all duration-500 transform ease-in-out ${
-            //     isOpen ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-50'
-            // }`}
+           
         >
             {isOpen && (
                 <div className="flex p-5 justify-end mb-2">

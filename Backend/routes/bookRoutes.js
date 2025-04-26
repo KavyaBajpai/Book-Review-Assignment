@@ -5,7 +5,7 @@ const booksRouter = express.Router();
 
 booksRouter.get('/getbooks', getAllBooks);
 booksRouter.get('/getbook/:bookId', getSingleBook);
-// route
+
 booksRouter.get('/getByTitle', getBookByTitle);
 
 export default booksRouter;

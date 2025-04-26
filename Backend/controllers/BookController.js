@@ -32,7 +32,7 @@ const getAllBooks = async (req, res) => {
     const { bookId } = req.params;
 
     try {
-      // Fetch book info
+      
       const bookData = await db
         .select()
         .from(books)
@@ -44,7 +44,7 @@ const getAllBooks = async (req, res) => {
   
       const book = bookData[0];
   
-      // Fetch all reviews for this book with usernames
+      
       const bookReviews = await db
         .select({
           reviewId: reviews.id,
@@ -68,7 +68,7 @@ const getAllBooks = async (req, res) => {
     }
   };
 
-  // controller
+
 const getBookByTitle = async (req, res) => {
   const { title } = req.query;
   try {

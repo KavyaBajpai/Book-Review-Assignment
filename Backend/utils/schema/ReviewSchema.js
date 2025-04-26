@@ -5,7 +5,7 @@ export const reviews = pgTable('reviews', {
     id: serial('id').primaryKey(),
     bookId: integer('book_id').notNull().references(() => books.id),
     userId: integer('user_id').notNull().references(() => users.id),
-    rating: integer('rating').notNull(), // validate between 1 and 5 in logic
+    rating: integer('rating').notNull(), 
     reviewText: text('review_text').notNull(),
     createdAt: timestamp('created_at').defaultNow(),
   });

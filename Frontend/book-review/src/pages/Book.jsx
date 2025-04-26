@@ -58,7 +58,7 @@ function Book() {
     }
   }, [bookId]);
   
-  // Track updates after states are set
+  
   useEffect(() => {
     console.log('Fetched data after state updated:', {
       title: bookTitle,

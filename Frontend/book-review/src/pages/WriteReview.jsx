@@ -15,21 +15,21 @@ function WriteReview() {
         
         console.log(bookTitle, reviewText, rating)
         try {
-            // Step 1: Fetch the book ID by title
+            
             const bookRes = await fetch(`http://localhost:4000/api/books/getByTitle?title=${encodeURIComponent(bookTitle)}`);
             console.log('Book response:', bookRes);
             const bookData = await bookRes.json();
-            //console.log(bookData);
+            
             console.log('Fetched book data:', bookData);
             if (!bookData.success || !bookData.data) {
                 toast.error("Book not found. Please make sure you've entered the correct title.");
-                //alert("Book not found. Please make sure you've entered the correct title.");
+                
                 return;
             }
     
             const bookId = bookData.data.id;
             const token = localStorage.getItem('token');
-            // Step 2: Submit the review with the correct bookId
+           
             const reviewRes = await fetch('http://localhost:4000/api/reviews/add', {
                 method: 'POST',
                 headers: {
@@ -50,7 +50,7 @@ function WriteReview() {
     
             const reviewResult = await reviewRes.json();
             toast.success("Review submitted successfully!");
-            //alert("Review submitted successfully!");
+            
             console.log(reviewResult);
             setBookTitle('');
             setReviewText('');
@@ -58,7 +58,7 @@ function WriteReview() {
         } catch (error) {
             console.error(error);
             toast.error("There was an error submitting your review.");
-            //alert("There was an error submitting your review.");
+            
         }
     };
     
