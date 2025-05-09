@@ -12,10 +12,10 @@ dotenv.config();
 const app = express();
 
 // Middleware
-import cors from 'cors';
+
 
 app.use(cors({
-  origin: '*', // or better, put your frontend URL here after deployment
+  origin: '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));

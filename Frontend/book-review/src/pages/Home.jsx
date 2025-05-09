@@ -5,7 +5,8 @@ function Home() {
   return (
     <div>
     <div className=" flex flex-col p-5 items-center justify-center">
-      <h1 className="text-white mt-48 text-4xl font-bold">Welcome to Voice&Verse</h1>
+      <h1 className="text-white mt-48 text-4xl ">Welcome to <span className='font-bold text-4xl text-white '>Voice&Verse</span></h1> 
+      
       <p className='text-gray-300 mt-6 text-xl w-2/3'>Discover honest reviews, heartfelt reflections, and thoughtful insights from fellow readers. Whether you're searching for your next great read or want to share your own thoughts, you're in the right place.</p>
       <div className='flex gap-3 mt-10'>
        <Link to='/login'>

@@ -15,7 +15,7 @@ function WriteReview() {
         
         console.log(bookTitle, reviewText, rating)
         try {
-        
+            //checking if entered book title exists or not.
             const bookRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/books/getByTitle?title=${encodeURIComponent(bookTitle)}`);
             console.log('Book response:', bookRes);
             const bookData = await bookRes.json();
@@ -30,6 +30,7 @@ function WriteReview() {
             const bookId = bookData.data.id;
             const token = localStorage.getItem('token');
             console.log(token)
+            //calling api to add review to the book's db.
             const reviewRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reviews/add`, {
                 method: 'POST',
                 headers: {

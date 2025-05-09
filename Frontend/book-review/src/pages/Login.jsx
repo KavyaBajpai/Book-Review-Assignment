@@ -32,11 +32,15 @@ const Login = () => {
 
       const data = await res.json();
       console.log(data); 
+      if(!data.success)
+      {
+        toast.error(`${data.message}`)
+      }
       if (data.user && data.user.username && data.user.id) {
         setUser(data.user.username);
         setUserId(data.user.id);
         localStorage.setItem('user', data.user.username); 
-      localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('userId', data.user.id);
         
       }
       
